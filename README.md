@@ -2,6 +2,8 @@
 
 Manipulate JavaScript object case insensitively
 
+`npm i insensitive-object --save`
+
 ## Example
 
 ```js
@@ -26,5 +28,4 @@ insensitiveObject.remove(obj, 'cookie')
 
 ## TODO
 
-+ Publish to NPM
 + Publish to CDN
