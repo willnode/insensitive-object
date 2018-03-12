@@ -1,0 +1,9 @@
+{
+  "name": "insensitive-object",
+  "version": "0.1.0",
+  "description": "Manipulate JavaScript object case insensitively",
+  "main": "index.js",
+  "repository": "https://github.com/willnode/insensitive-object",
+  "author": "Wildan Mubarok",
+  "license": "MIT"
+}
