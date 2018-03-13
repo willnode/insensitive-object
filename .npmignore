@@ -1,0 +1,4 @@
+.gitattributes
+.travis.yml
+package-lock.json
+test.js
