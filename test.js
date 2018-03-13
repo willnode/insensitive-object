@@ -1,6 +1,6 @@
 import test from 'ava';
 
-const insObject = require('.');
+const inso = require('.');
 
 const obj = {
 	Accept: '*/*',
@@ -9,14 +9,14 @@ const obj = {
 };
 
 test('test methods', t => {
-    t.deepEqual(insObject.get(obj, 'user-agent'), 'Mozilla/5.0');
-    t.deepEqual(insObject.set(obj, 'user-agent', 'Googlebot'),
+    t.deepEqual(inso.get(obj, 'user-agent'), 'Mozilla/5.0');
+    t.deepEqual(inso.set(obj, 'user-agent', 'Googlebot'),
         { Accept: '*/*', 'user-agent': 'Googlebot', cOOKIE: 'SID=123;' }
     );
-    t.deepEqual(insObject.assign(obj, { accept: 'application/json', 'accept-encoding': 'gzip' }),
+    t.deepEqual(inso.assign(obj, { accept: 'application/json', 'accept-encoding': 'gzip' }),
         { accept: 'application/json', 'user-agent': 'Googlebot', cOOKIE: 'SID=123;', 'accept-encoding': 'gzip' }
     );
-    t.deepEqual(insObject.remove(obj, 'cookie'),
+    t.deepEqual(inso.remove(obj, 'cookie'),
         { accept: 'application/json', 'user-agent': 'Googlebot', 'accept-encoding': 'gzip' }
     );
 });

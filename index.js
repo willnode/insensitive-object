@@ -1,8 +1,8 @@
 
 /**
  * Get object value
- * @param {{}} object - the source object
- * @param {string} key - the case-insensitive property name
+ * @param {{}} object the source object
+ * @param {string} key the case-insensitive property name
  * @return {*}
  */
 function get(object, key) {
@@ -21,12 +21,18 @@ function get(object, key) {
 }
 
 /**
+ * Optional insensitive-object set options
+ * @typedef {Object} INSOSetOptions
+ * @property {boolean} [keepGoing] don't quit after first match found (default false)
+ * @property {boolean} [keepOriginalCasing] preserve original casing (default false)
+ */
+
+/**
  * Get object value
- * @param {{}} object - the source object
- * @param {string} key - the case-insensitive property name
- * @param {*} value - value to be set (undefined === delete)
- * @param {boolean} [keepGoing] - don't quit after first match found
- * @param {boolean} [keepOriginalCasing] - preserve original casing (keepGoing should off too)
+ * @param {{}} object the source object
+ * @param {string} key the case-insensitive property name
+ * @param {*} value value to be set (undefined === delete)
+ * @param {INSOSetOptions} [options] optional options
  * @return {Object} the source object
  */
 function set(object, key, value, options) {
@@ -64,8 +70,8 @@ function set(object, key, value, options) {
 
 /**
  * Set multiple values to target by source object
- * @param {{}} target - the mutable object to be modified or filled with
- * @param {{}} source - an object source
+ * @param {{}} target the mutable object to be modified or filled with
+ * @param {{}} source an object source
  * @returns {{}} the same modified target (for piping)
  */
 function assign(target, source) {
@@ -75,8 +81,8 @@ function assign(target, source) {
 
 /**
  * Remove a property with
- * @param {{}} object - the mutable object to be modified or filled with
- * @param {string} key - the case-insensitive property name
+ * @param {{}} object the mutable object to be modified or filled with
+ * @param {string} key the case-insensitive property name
  * @returns {{}} the same object
  */
 function remove(object, key) {
