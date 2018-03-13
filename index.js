@@ -6,15 +6,18 @@
  * @return {*}
  */
 function get(object, key) {
-    if (!key) throw 'key can\'t be empty';
+	if (!key) {
+		throw new Error('key can\'t be empty');
+	}
 
-    var keys = Object.keys(object);
-    var keyup = (key + '').toUpperCase();
-    for (let i = 0; i < keys.length; i++) {
-        const el = keys[i];
-        if (el.length === key.length && el.toUpperCase() === keyup)
-            return object[el];
-    }
+	const keys = Object.keys(object);
+	const keyup = (String(key)).toUpperCase();
+	for (let i = 0; i < keys.length; i++) {
+		const el = keys[i];
+		if (el.length === key.length && el.toUpperCase() === keyup) {
+			return object[el];
+		}
+	}
 }
 
 /**
@@ -26,36 +29,37 @@ function get(object, key) {
  * @param {boolean} [keepOriginalCasing] - preserve original casing (keepGoing should off too)
  * @return {Object} the source object
  */
-function set(object, key, value, keepGoing, keepOriginalCasing) {
-    if (!key) throw 'key can\'t be empty';
+function set(object, key, value, options) {
+	if (!key) {
+		throw new Error('key can\'t be empty');
+	}
 
-    var keys = Object.keys(object);
-    var keyup = (key + '').toUpperCase();
-    for (let i = 0; i < keys.length; i++) {
-        const el = keys[i];
-        if (el.length === key.length && el.toUpperCase() === keyup) {
-            if (keepOriginalCasing || el === key) {
-                if (value === undefined)
-                    delete object[el];
-                else
-                    object[el] = value;
-            }
-            else {
-                if (object[el] !== undefined)
-                    delete object[el];
-                if (value !== undefined)
-                    object[key] = value;
-            }
-            if (!keepGoing)
-                return object;
-        }
-    }
+	const keys = Object.keys(object);
+	const keyup = (String(key)).toUpperCase();
+	const keepOriginalCasing = options && options.keepOriginalCasing;
+	const keepGoing = options && options.keepGoing;
 
-    if (!keepGoing)
-        // looks like nothing mathing at all
-        object[key] = value;
+	for (let i = 0; i < keys.length; i++) {
+		const el = keys[i];
+		if (el.length === key.length && el.toUpperCase() === keyup) {
+			if (keepOriginalCasing || el === key) {
+				object[el] = value;
+			} else {
+				delete object[el];
+				object[key] = value;
+			}
+			if (!keepGoing) {
+				return object;
+			}
+		}
+	}
 
-    return object;
+	if (!keepGoing) {
+		// Looks like nothing matching at all
+		object[key] = value;
+	}
+
+	return object;
 }
 
 /**
@@ -65,21 +69,8 @@ function set(object, key, value, keepGoing, keepOriginalCasing) {
  * @returns {{}} the same modified target (for piping)
  */
 function assign(target, source) {
-    Object.keys(source).forEach((v) => set(target, v, source[v]));
-    return target;
-}
-
-/**
- * Set multiple values to target by source object
- * @param {{}} target - the mutable object to be modified or filled with
- * @param {{}} modifier - an object source
- * @returns {{}} the same modified target (for piping)
- */
-function distict(target, modifier) {
-    var keys = Object.keys(target);
-    if (modifier) {
-        keys = keys.map(v => modifier(v));
-    }
+	Object.keys(source).forEach(v => set(target, v, source[v]));
+	return target;
 }
 
 /**
@@ -89,8 +80,20 @@ function distict(target, modifier) {
  * @returns {{}} the same object
  */
 function remove(object, key) {
-    set(object, key, undefined, true, false);
-    return object;
+	if (!key) {
+		throw new Error('key can\'t be empty');
+	}
+
+	const keys = Object.keys(object);
+	const keyup = String(key).toUpperCase();
+	for (let i = 0; i < keys.length; i++) {
+		const el = keys[i];
+		if (el.length === keyup.length && el.toUpperCase() === keyup) {
+			delete object[el];
+		}
+	}
+
+	return object;
 }
 
-module.exports = { get, set, assign, distict, remove };
+module.exports = { get, set, assign, remove };
